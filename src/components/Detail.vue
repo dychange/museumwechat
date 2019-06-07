@@ -29,6 +29,8 @@ export default {
     flex-direction: column;
     align-items: center;
     line-height: .4rem;
+    background-color: #fff;
+    padding: 0 .4rem;
 }
 .detail-img{
     margin: .8rem 0;
@@ -49,6 +51,6 @@ export default {
 .detail-info{
     width: 6.4rem;
     letter-spacing: .04rem;
-    margin-bottom: 1rem;
+    margin-bottom: .8rem;
 }
 </style>
