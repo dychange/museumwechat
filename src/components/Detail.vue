@@ -4,7 +4,7 @@
        <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1559833406716&di=3edcc729129bdd66f71d01d1afb998b0&imgtype=0&src=http%3A%2F%2Fk.zol-img.com.cn%2Fsjbbs%2F7692%2Fa7691515_s.jpg" >
    </div>
    <div class="detail-audio">
-       <audio src="http://119.147.228.20/amobile.music.tc.qq.com/C400002dyeMH27egCQ.m4a?guid=8890570360&vkey=89320E6984F44236C6090117B0033E080615F12BE5AEED2A3BC2B4ADC1BD86CFF05CAFE84C2568F5E6DE77043341EE581CB09DCCBD5DC710&uin=2815&fromtag=66" controls></audio>
+       <audio src="http://isure.stream.qqmusic.qq.com/C400004QZMUo026HhX.m4a?guid=8890570360&vkey=1648BB216669D48BD57A78A8765F372332D76544F2F13AAE4FC3B4B747D59DB4CB05BAE0FB1FCC62F58DD938722D968ED360173859FE52F9&uin=0&fromtag=66" controls></audio>
    </div>
    <div class="detail-title">
        <h1>这是标题</h1>
