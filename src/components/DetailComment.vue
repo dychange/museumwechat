@@ -1,31 +1,39 @@
 <template>
-  <div class="comment-container">
-    <div class="comment-title">
-      <div>留言</div>
-      <router-link to='' class="write-msg">写留言</router-link>
-    </div>
-    <div class="comment-info">
-      <div class="comment-img">
-        <img
-          src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1559833406716&di=3edcc729129bdd66f71d01d1afb998b0&imgtype=0&src=http%3A%2F%2Fk.zol-img.com.cn%2Fsjbbs%2F7692%2Fa7691515_s.jpg"
-        >
+  <div class="comment-container" ref="wrapper">
+    <div class="content">
+      <div class="comment-title">
+        <div>留言</div>
+        <router-link to class="write-msg">写留言</router-link>
       </div>
-      <div class="comment-msg">
-        <div class="author">作者</div>
-        <p
-          class="msg"
-        >这是留言消息这是留言消息这是留言消息这是留言消息这是留言消息这是留言消息这是留言消息这是留言消息这是留言消息这是留言消息这是留言消息这是留言消息这是留言消息这是留言消息这是留言消息这是留言消息</p>
+      <div class="comment-info" v-for="item in commentList" :key="item.id">
+        <div class="comment-img">
+          <img
+            :src="item.headImg"
+          >
+        </div>
+        <div class="comment-msg">
+          <div class="author">{{item.nickName}}</div>
+          <p
+            class="msg"
+          >{{item.city}}</p>
+        </div>
+        <div class="good">
+          <div>点赞:666</div>
+        </div>
       </div>
-      <div class="good">
-        <div>点赞:666</div>
-      </div>
+     
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "Comment"
+  name: "Comment",
+  props:{
+    commentList:{
+      type:Array
+    }
+  }
 };
 </script>
 
@@ -34,6 +42,10 @@ export default {
   margin-top: 0.8rem;
   margin-bottom: 0.6rem;
   padding: 0 0.4rem;
+}
+.content{
+  background-color: #f5f5f5;
+
 }
 .comment-title {
   display: flex;
@@ -44,6 +56,7 @@ export default {
   display: flex;
   flex-direction: row;
   position: relative;
+  margin-bottom: 0.8rem;
 }
 .comment-img img {
   width: 0.96rem;
@@ -58,10 +71,10 @@ export default {
   right: 0;
   top: 0;
 }
-.msg{
-    letter-spacing: .01rem;
+.msg {
+  letter-spacing: 0.01rem;
 }
 .write-msg {
-    color: 	#4169E1;
+  color: #4169e1;
 }
 </style>

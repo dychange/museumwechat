@@ -25,8 +25,8 @@ class HttpRequest {
             console.log('请求拦截：',config)
           
             // 将Token设置到headers中
-            if(getUserInfoMessage('userInfo'))
-                config.headers.Authorization = getUserInfoMessage('userInfo').token
+            // if(getUserInfoMessage('userInfo'))
+            //     config.headers.Authorization = getUserInfoMessage('userInfo').token
                 
             return config
         }, err => {
@@ -35,26 +35,19 @@ class HttpRequest {
 
         // 响应拦截
         instance.interceptors.response.use(res => {
-            endLoading()
             let {msg,status}=res.data
             if (status === 401) {
-                Message.error(msg)
-                clearLocalStorage()
                 router.replace('/login')
             }else if( status === 403){
-                Message.error(msg)
                 router.replace('/')
             }else if( status === 400){
-                Message.error(msg)
             }
             return res
         }, err => {
-           if(err.response.status === 404){
-                router.replace('/404')
-            }else{
-                endLoading()
-                Message.error('不好意思,出错了ヾ|≧_≦|〃')
-            }
+        //    if(err.response.status === 404){
+        //         router.replace('/404')
+        //     }else{
+        //     }
            return Promise.reject(err)
         })
     }
