@@ -18,7 +18,12 @@ Vue.use(Router)
     {
       path:'/notice',
       name:'Notice',
-      component:()=> import('../views/Notice.vue')
+      component:()=> import('../views/Notice.vue'),
+    },
+    {
+      path:'/notice/:id',
+      name:'NoticeDetail',
+      component:()=> import('../components/NoticeDetail.vue')
     },
     {
       path:'/lostandfound',

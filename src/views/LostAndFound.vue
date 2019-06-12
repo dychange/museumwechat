@@ -1,32 +1,39 @@
 <template>
   <div class="container">
-    <div class="lost-container" v-for="item in lostList" :key="item.id">
-      <div class="lostname">名称：{{item.articleName}}</div>
-      <div class="content">说明：{{item.remark}}</div>
-      <div class="place">丢失地点：{{item.lostPlace}}</div>
-      <div class="time">丢失时间：{{item.lostTime}}</div>
+    <div v-if="haslost">
+      <div class="lost-container" v-for="item in lostList" :key="item.id">
+        <div class="lostname">名称：{{item.articleName}}</div>
+        <div class="content">说明：{{item.remark}}</div>
+        <div class="place">丢失地点：{{item.lostPlace}}</div>
+        <div class="time">丢失时间：{{item.lostTime}}</div>
+      </div>
     </div>
+    <div class="nolost" v-else>{{tips}}</div>
   </div>
 </template>
 
 <script>
-import {getLostInfo} from '../api/notice'
-import {handleLost} from '../lib/handleData'
+import { getLostInfo } from "../api/notice";
+import { handleLost } from "../lib/handleData";
 export default {
   name: "LostAndFound",
   data() {
-      return {
-          lostList:[]
-      }
+    return {
+      lostList: [],
+      haslost: false,
+      tips:''
+    };
   },
   created() {
-      getLostInfo().then((result) => {
-        if(result.data.status===200){
-            this.lostList=handleLost(result)
-            console.log(result)
-        }  
-      })
-  },
+    getLostInfo().then(result => {
+      if (result.data.status === 200) {
+        this.lostList = handleLost(result);
+        this.haslost=true
+      }else if(result.data.status === 0){
+        this.tips=result.data.msg
+      }
+    });
+  }
 };
 </script>
 
@@ -36,7 +43,7 @@ export default {
 }
 .lost-container {
   width: 95%;
-  margin-top: 0.6rem;
+  margin-top: 0.3rem;
   display: flex;
   flex-direction: column;
   border: 0.02rem solid #ccc;
@@ -53,8 +60,19 @@ export default {
 }
 
 .place {
-  padding:.1rem 0 .3rem 0;
+  padding: 0.1rem 0 0.3rem 0;
   overflow: hidden;
   word-break: break-all;
+}
+.nolost {
+  width: 4rem;
+  height: 4rem;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -2rem;
+  margin-top: -2rem;
+  text-align: center;
+  font-size: 0.5rem;
 }
 </style>

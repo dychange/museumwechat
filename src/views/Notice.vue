@@ -1,13 +1,16 @@
 <template>
   <div class="container">
-    <div class="notice-container" v-for="item in noticeList" :key="item.id">
+    <div v-if='hasnotice'>
+    <routerLink tag='div' :to="/notice/+item.id" class="notice-container" v-for="item in noticeList" :key="item.id" >
       <div class="header">
-        <div class="title-type" v-if="item.type===2?true:false">紧急通知:</div>
-        <span class="title">{{item.title}}</span>
+        <div class="danger" v-if="item.type===2?true:false">[紧急通告:]</div>
+        <div class="common" v-else>[普通通告:]</div>
+        <div class="title">{{item.title}}</div>
       </div>
-      <div class="content">{{item.content}}</div>
       <div class="time">{{item.addTime}}</div>
-    </div>
+      </routerLink>
+      </div>
+    <div class="nonotice" v-else>{{tips}}</div>  
   </div>
 </template>
 
@@ -19,13 +22,20 @@ export default {
   name: "Notice",
   data() {
     return {
-      noticeList: []
+      noticeList: [],
+      hasnotice:false,
+      tips:''
     };
+  },
+  methods: {
   },
   created() {
     getNotices().then(result => {
       if (result.data.status === 200) {
         this.noticeList = handleNotice(result);
+        this.hasnotice=true
+      }else if(result.data.status === 0){
+          this.tips=result.data.msg
       }
     });
   }
@@ -33,18 +43,14 @@ export default {
 </script>
 
 <style scoped>
-.container {
-  padding: 0 0.4rem;
-}
+
 .notice-container {
-  width: 89.3%;
-  margin-top: 0.6rem;
+  width: 94%;
+  margin-top: 0.1rem;
   display: flex;
   flex-direction: column;
-  border: 0.02rem solid #ccc;
+  border-bottom: 0.02rem solid #ccc;
   padding: 0.2rem;
-  border-radius: 0.1rem;
-  box-shadow: 0 0.06rem 0.06rem -0.02rem #ccc, 0.06rem 0 0.06rem -0.02rem #ccc;
   background-color: #fff;
 }
 .header {
@@ -52,21 +58,33 @@ export default {
   word-break: break-all;
 }
 .title {
-  overflow: hidden;
-  font-size: 0.36rem;
-  font-weight: 600;
+  font-size: 0.28rem;
+  margin: .28rem 0;
 }
-.content {
-  padding: 0.3rem 0;
-  font-size: 0.3rem;
-  overflow: hidden;
-  word-break: break-all;
-}
+
 .time {
   margin-left: auto;
+  font-size: .24rem;
+  color: #ccc;
 }
-.title-type {
+.danger {
   color: #d81e06;
-  font-size: 0.36rem;
+  font-size: 0.28rem;
+  margin-bottom: .04rem;
+}
+.common{
+  font-size: 0.28rem;
+  margin-bottom: .04rem;
+}
+.nonotice{
+  width: 4rem;
+  height: 4rem;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -2rem;
+  margin-top: -2rem;
+  text-align: center;
+  font-size: .5rem;
 }
 </style>

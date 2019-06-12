@@ -24,10 +24,6 @@ class HttpRequest {
             //  如果队列中没有请求则开始加载动画
             console.log('请求拦截：',config)
           
-            // 将Token设置到headers中
-            // if(getUserInfoMessage('userInfo'))
-            //     config.headers.Authorization = getUserInfoMessage('userInfo').token
-                
             return config
         }, err => {
             return Promise.reject(err)
@@ -35,13 +31,6 @@ class HttpRequest {
 
         // 响应拦截
         instance.interceptors.response.use(res => {
-            let {msg,status}=res.data
-            if (status === 401) {
-                router.replace('/login')
-            }else if( status === 403){
-                router.replace('/')
-            }else if( status === 400){
-            }
             return res
         }, err => {
         //    if(err.response.status === 404){

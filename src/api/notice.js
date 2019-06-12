@@ -14,7 +14,16 @@ const getLostInfo=()=>{
     })
 }
 
+const getNoticeDetail=(data)=>{
+    return axios.request({
+        url:'/weChatAnnouncement/select',
+        method:'post',
+        data
+    })
+}
+
 export {
     getNotices,
-    getLostInfo
+    getLostInfo,
+    getNoticeDetail
 }
