@@ -1,37 +1,28 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '../views/Home.vue'
+import routes from './routes'
+
 
 Vue.use(Router)
 
+
+
  const router= new Router({
-  routes: [
-    {
-      path:'/',
-      redirect:'/detail/'
-    },
-    {
-      path: '/detail/:id',
-      name: 'home',
-      component: Home
-    },
-    {
-      path:'/notice',
-      name:'Notice',
-      component:()=> import('../views/Notice.vue'),
-    },
-    {
-      path:'/notice/:id',
-      name:'NoticeDetail',
-      component:()=> import('../components/NoticeDetail.vue')
-    },
-    {
-      path:'/lostandfound',
-      name:'LostAndFound',
-      component:()=> import('../views/LostAndFound.vue')
-    }
-  ]
+  routes,
+  scrollBehavior (to, from, savedPosition) {
+    return { x: 0, y: 0 }
+  }
 })
+
+// router.beforeEach((to, from, next) => {
+//   let wx = navigator.userAgent.toLowerCase()
+//   if (wx.match(/MicroMessenger/i) === 'micromessenger') {
+//     next()
+//   } else {
+//     alert('请用微信打开')
+//     next(false)
+//   }
+// })
 
 
 export default router

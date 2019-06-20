@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <div class="notice">通告</div>
     <div v-if='hasnotice'>
     <routerLink tag='div' :to="/notice/+item.id" class="notice-container" v-for="item in noticeList" :key="item.id" >
       <div class="header">
@@ -43,15 +44,23 @@ export default {
 </script>
 
 <style scoped>
-
+.container{
+  padding: 0 .2rem
+}
 .notice-container {
   width: 94%;
-  margin-top: 0.1rem;
+  margin-top: 0.2rem;
   display: flex;
   flex-direction: column;
   border-bottom: 0.02rem solid #ccc;
   padding: 0.2rem;
   background-color: #fff;
+}
+.notice{
+  text-align: center;
+  margin: .3rem 0;
+  font-size: .36rem;
+  font-weight: bold;
 }
 .header {
   overflow: hidden;

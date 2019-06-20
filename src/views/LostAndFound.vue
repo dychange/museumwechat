@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <div class="title">失物招领</div>
     <div v-if="haslost">
       <div class="lost-container" v-for="item in lostList" :key="item.id">
         <div class="lostname">名称：{{item.articleName}}</div>
@@ -41,6 +42,12 @@ export default {
 .container {
   padding: 0 0.4rem;
 }
+.title{
+  text-align: center;
+  margin-top: .4rem;
+  font-size: .36rem;
+  font-weight: bold;
+}
 .lost-container {
   width: 95%;
   margin-top: 0.3rem;
@@ -49,7 +56,7 @@ export default {
   border: 0.02rem solid #ccc;
   padding: 0.2rem;
   border-radius: 0.1rem;
-  box-shadow: 0 0.06rem 0.06rem -0.02rem #ccc, 0.06rem 0 0.06rem -0.02rem #ccc;
+  box-shadow: 0 0.06rem 0.06rem -0.02rem #000, 0.06rem 0 0.06rem -0.02rem #000;
   background-color: #fff;
 }
 .content {

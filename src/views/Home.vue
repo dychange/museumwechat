@@ -35,17 +35,17 @@ export default {
     //     console.log(result)
     //   }
     // })
-    getCommentList({
-      //  id,
-      page: 1,
-      rows: 5
-    }).then(result => {
-      console.log(result)
-      if (result.data.status === 200) {
-        let list = [];
-        this.commentList = list.concat(result.data.info.rows);
-      }
-    });
+    // getCommentList({
+    //    id,
+    //   page: 1,
+    //   rows: 5
+    // }).then(result => {
+    //   console.log(result)
+    //   if (result.data.status === 200) {
+    //     let list = [];
+    //     this.commentList = list.concat(result.data.info.rows);
+    //   }
+    // });
   },
   mounted() {
     this.$nextTick(() => {

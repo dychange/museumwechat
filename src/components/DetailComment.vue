@@ -7,21 +7,16 @@
       </div>
       <div class="comment-info" v-for="item in commentList" :key="item.id">
         <div class="comment-img">
-          <img
-            :src="item.headImg"
-          >
+          <img :src="item.headImg">
         </div>
         <div class="comment-msg">
           <div class="author">{{item.nickName}}</div>
-          <p
-            class="msg"
-          >{{item.city}}</p>
+          <p class="msg">{{item.city}}</p>
         </div>
         <div class="good">
           <div>点赞:666</div>
         </div>
       </div>
-     
     </div>
   </div>
 </template>
@@ -29,9 +24,13 @@
 <script>
 export default {
   name: "Comment",
-  props:{
-    commentList:{
-      type:Array
+  data() {
+    return {};
+  },
+  created() {},
+  props: {
+    commentList: {
+      type: Array
     }
   }
 };
@@ -39,18 +38,16 @@ export default {
 
 <style scoped>
 .comment-container {
-  margin-top: 0.8rem;
-  margin-bottom: 0.6rem;
-  padding: 0 0.4rem;
-}
-.content{
+  padding:0 0.4rem;
   background-color: #f5f5f5;
-
+}
+.content {
+  padding: .4rem 0;
 }
 .comment-title {
   display: flex;
   justify-content: space-between;
-  margin: 0.4rem 0;
+  margin: 0.2rem 0;
 }
 .comment-info {
   display: flex;
