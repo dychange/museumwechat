@@ -5,10 +5,9 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    page:1,
+    page:1
   },
   mutations: {
-    
   },
   actions: {
 

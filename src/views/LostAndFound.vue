@@ -1,39 +1,59 @@
 <template>
-  <div class="container">
-    <div class="title">失物招领</div>
-    <div v-if="haslost">
-      <div class="lost-container" v-for="item in lostList" :key="item.id">
-        <div class="lostname">名称：{{item.articleName}}</div>
-        <div class="content">说明：{{item.remark}}</div>
-        <div class="place">丢失地点：{{item.lostPlace}}</div>
-        <div class="time">丢失时间：{{item.lostTime}}</div>
+  <div>
+    <user></user>
+    <div class="container">
+      <div class="title">失物招领</div>
+      <div v-if="haslost">
+        <div class="lost-container" v-for="item in lostList" :key="item.id">
+          <div class="lostname">名称：{{item.articleName}}</div>
+          <div class="content">说明：{{item.remark}}</div>
+          <div class="place">丢失地点：{{item.lostPlace}}</div>
+          <div class="time">丢失时间：{{item.lostTime}}</div>
+        </div>
       </div>
+      <div class="nolost" v-else>{{tips}}</div>
     </div>
-    <div class="nolost" v-else>{{tips}}</div>
   </div>
 </template>
 
 <script>
 import { getLostInfo } from "../api/notice";
 import { handleLost } from "../lib/handleData";
+import User from "./User";
 export default {
   name: "LostAndFound",
   data() {
     return {
       lostList: [],
       haslost: false,
-      tips:''
+      tips: "",
+      userInfo: {
+        img: "",
+        nickName: ""
+      }
     };
   },
   created() {
+    let userInfo = this.$route.params.pathMatch;
+    let list = userInfo.split("&");
+    let info = [];
+    for (let i = 0; i < list.length; i++) {
+      info.push(list[i].substring(list[i].lastIndexOf("=") + 1));
+    }
+    this.userInfo.img = info[0];
+    this.userInfo.nickName = info[1];
+    localStorage.setItem("userInfo", JSON.stringify(this.userInfo));
     getLostInfo().then(result => {
       if (result.data.status === 200) {
         this.lostList = handleLost(result);
-        this.haslost=true
-      }else if(result.data.status === 0){
-        this.tips=result.data.msg
+        this.haslost = true;
+      } else if (result.data.status === 0) {
+        this.tips = result.data.msg;
       }
     });
+  },
+  components: {
+    User
   }
 };
 </script>
@@ -42,10 +62,10 @@ export default {
 .container {
   padding: 0 0.4rem;
 }
-.title{
+.title {
   text-align: center;
-  margin-top: .4rem;
-  font-size: .36rem;
+  margin-top: 0.4rem;
+  font-size: 0.36rem;
   font-weight: bold;
 }
 .lost-container {

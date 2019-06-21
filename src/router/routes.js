@@ -1,5 +1,3 @@
-import Home from '../views/Home.vue'
-
 
 export default [
     {
@@ -9,20 +7,20 @@ export default [
       {
         path: '/detail/:id',
         name: 'home',
-        component: Home
+        component:()=> import('../views/Home.vue')
       },
       {
-        path:'/notice',
+        path:'/notice/*',
         name:'Notice',
         component:()=> import('../views/Notice.vue'),
       },
       {
-        path:'/notice/:id',
+        path:'/noticedetail/:id',
         name:'NoticeDetail',
         component:()=> import('../components/NoticeDetail.vue')
       },
       {
-        path:'/lostandfound',
+        path:'/lostandfound/*',
         name:'LostAndFound',
         component:()=> import('../views/LostAndFound.vue')
       },

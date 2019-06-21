@@ -54,6 +54,7 @@ export default {
   flex-direction: row;
   position: relative;
   margin-bottom: 0.8rem;
+  background-color: #f5f5f5;
 }
 .comment-img img {
   width: 0.96rem;

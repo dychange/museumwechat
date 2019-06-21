@@ -11,10 +11,11 @@
     "better-scroll": "^1.15.2",
     "core-js": "^2.6.5",
     "vue": "^2.6.10",
-    "vue-amap": "^0.5.9",
     "vue-router": "^3.0.3",
     "vuex": "^3.0.1",
-    "weixin-js-sdk": "^1.4.0-test"
+    "weixin-js-sdk": "^1.4.0-test",
+    "weui": "^2.0.0",
+    "weui.js": "^1.1.4"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.8.0",

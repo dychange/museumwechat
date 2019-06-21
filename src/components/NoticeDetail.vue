@@ -1,9 +1,12 @@
 <template>
-  <div class="container">
-    <div class="detail">
-      <div class="title">{{detailList.title}}</div>
-      <div class="time">{{detailList.addTime}}</div>
-      <div class="content">{{detailList.content}}</div>
+  <div>
+    <user></user>
+    <div class="container">
+      <div class="detail">
+        <div class="title">{{detailList.title}}</div>
+        <div class="time">{{detailList.addTime}}</div>
+        <div class="content">{{detailList.content}}</div>
+      </div>
     </div>
   </div>
 </template>
@@ -11,6 +14,7 @@
 <script>
 import { getNoticeDetail } from "../api/notice";
 import { formatDate } from "../lib/formate";
+import User from "../views/User";
 export default {
   name: "NoticeDetail",
   data() {
@@ -37,6 +41,9 @@ export default {
         };
       }
     });
+  },
+  components: {
+    User
   }
 };
 </script>
@@ -53,8 +60,8 @@ export default {
   margin-top: 0.8rem;
 }
 .title {
-    text-align: center;
-  width: 5rem;
+  padding: 0.2rem;
+  text-align: center;
   font-size: 0.36rem;
   overflow: hidden;
   word-break: break-all;
@@ -65,6 +72,7 @@ export default {
   margin: 0.2rem 0 0.4rem 0;
 }
 .content {
+  padding: .2rem;
   line-height: 0.44rem;
   font-size: 0.32rem;
   overflow: hidden;

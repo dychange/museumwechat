@@ -2,7 +2,7 @@
   <div class="detail">
     <div class="detail-container">
       <div class="detail-title">
-        <div>展品名称</div>
+        <h1 style="font-weight:bold">展品名称</h1>
       </div>
       <div class="detail-img">
         <img
@@ -22,39 +22,24 @@
       </div>
     </div>
     <div class="location">
-      <div class="youraddress">您当前的位置:</div>
-      <div class="address">{{address}}</div>
+      <div>您当前的位置:</div>
+      <div class="address">{{position.address}}</div>
     </div>
     <div id="map-container"></div>
   </div>
 </template>
 
 <script>
-import {location} from '../lib/location'
 export default {
   name: "Detail",
   data() {
     return {
-      address: "定位中..."
     };
   },
-  methods: {
-     getLocation() {
-      let that = this;
-      let geolocation = location.initMap("map-container"); //定位
-      AMap.event.addListener(geolocation, "complete", result => {
-        console.log(result)
-        that.address=result.formattedAddress
-      });
-      AMap.event.addListener(geolocation, 'error', onError =>{
-        console.log(onError)
-      })
-    },
-  },
-  mounted() {
-    setTimeout(() => {
-    this.getLocation()        
-    }, 50);
+  props:{
+    position:{
+      type:Object
+    }
   }
 };
 </script>
@@ -83,16 +68,15 @@ export default {
   background-color: #fff;
 }
 .detail-title {
-  width: 5.6rem;
+  padding: .2rem;
   text-align: center;
-  margin: 0.8rem 0 0 0;
+  margin-top: 0.8rem;
   font-size: 0.36rem;
   overflow: hidden;
   word-break: break-all;
-  font-weight: bold;
 }
 .detail-info {
-  width: 6.4rem;
+  padding: .2rem;
   margin: 0.8rem 0;
   line-height: 0.5rem;
 }
@@ -104,10 +88,9 @@ export default {
   font-size: 0.36rem;
 }
 .location {
-  padding-left: 0.19rem;
+  padding-left: 0.2rem;
 }
-.youraddress {
-}
+
 .address {
   color: #ff6347;
   margin: 0.2rem 0;
