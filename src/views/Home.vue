@@ -1,11 +1,18 @@
 <template>
   <div class="home" ref="home">
-    <div class="content">
+    <div class="content" v-show="position.flag">
       <detail :position="position"></detail>
       <detail-comment :commentList="commentList"></detail-comment>
       <div class="weui-loadmore" v-if="loading">
         <i class="weui-loading"></i>
         <span class="weui-loadmore__tips">正在加载...</span>
+      </div>
+    </div>
+    <div id="loadingToast" v-show="!position.flag">
+      <div class="weui-mask_transparent"></div>
+      <div class="weui-toast">
+        <i class="weui-loading weui-icon_toast"></i>
+        <p class="weui-toast__content">数据加载中</p>
       </div>
     </div>
   </div>
@@ -33,7 +40,8 @@ export default {
       position: {
         lat: null,
         lng: null,
-        address: "定位中"
+        address: "定位中",
+        flag: false
       }
     };
   },
@@ -45,10 +53,12 @@ export default {
         vm.position.lat = result.position.lat;
         vm.position.lng = result.position.lng;
         vm.position.address = result.formattedAddress;
+        vm.position.flag = true;
       });
       AMap.event.addListener(geolocation, "error", onError => {
         console.log(onError);
         vm.position.address = "定位失败";
+        vm.position.flag = true;
       });
     });
   },

@@ -42,7 +42,12 @@ export default {
       }
     };
   },
-  methods: {},
+  methods: {
+    decodeUnicode(str) {
+      str = str.replace(/\\/g, "%");
+      return unescape(str);
+    }
+  },
   created() {
     let userInfo = this.$route.params.pathMatch;
     let list = userInfo.split("&");
@@ -51,7 +56,8 @@ export default {
       info.push(list[i].substring(list[i].lastIndexOf("=") + 1));
     }
     this.userInfo.img = info[0];
-    this.userInfo.nickName = info[1];
+    this.userInfo.nickName = this.decodeUnicode(info[1]);
+
     localStorage.setItem("userInfo", JSON.stringify(this.userInfo));
     getNotices().then(result => {
       if (result.data.status === 200) {

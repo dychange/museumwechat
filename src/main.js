@@ -12,6 +12,7 @@ Vue.config.productionTip = false
 Vue.prototype.$axios=axios
 Vue.prototype.$weui=weui
 
+
 new Vue({
   router,
   store,

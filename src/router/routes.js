@@ -1,8 +1,13 @@
 
 export default [
-    {
+      {
         path:'/',
-        redirect:'/detail/'
+        redirect:'/detail'
+      },
+      {
+        path:'/author',
+        name:'Author',
+        component:()=> import('../views/Author.vue')
       },
       {
         path: '/detail/:id',
@@ -28,5 +33,10 @@ export default [
           path:'/writecomment/:id',
           name:'WriteComment',
           component:()=> import('../components/WriteComment.vue')
+      },
+      {
+        path:'/error',
+        name:'Error',
+        component:()=> import('../components/Error.vue')
       }
 ]

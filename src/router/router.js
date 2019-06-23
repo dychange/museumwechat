@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import routes from './routes'
-
+import {getUserInfoMessage} from '../utils/localStorage'
 
 Vue.use(Router)
 
@@ -14,15 +14,13 @@ Vue.use(Router)
   }
 })
 
-// router.beforeEach((to, from, next) => {
-//   let wx = navigator.userAgent.toLowerCase()
-//   if (wx.match(/MicroMessenger/i) === 'micromessenger') {
-//     next()
-//   } else {
-//     alert('请用微信打开')
-//     next(false)
-//   }
-// })
+router.beforeEach((to, from, next) => {
+      if(!getUserInfoMessage('userInfo') && to.path!=='/author'){
+        next({path:'/author',query:{url:'',token:'',openid:''}});
+      }else{
+        next();
+      }
+})
 
 
 export default router

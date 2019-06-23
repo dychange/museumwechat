@@ -33,12 +33,12 @@
 export default {
   name: "Detail",
   data() {
-    return {
-    };
+    return {};
   },
-  props:{
-    position:{
-      type:Object
+  
+  props: {
+    position: {
+      type: Object
     }
   }
 };
@@ -68,7 +68,7 @@ export default {
   background-color: #fff;
 }
 .detail-title {
-  padding: .2rem;
+  padding: 0.2rem;
   text-align: center;
   margin-top: 0.8rem;
   font-size: 0.36rem;
@@ -76,7 +76,7 @@ export default {
   word-break: break-all;
 }
 .detail-info {
-  padding: .2rem;
+  padding: 0.2rem;
   margin: 0.8rem 0;
   line-height: 0.5rem;
 }
@@ -95,5 +95,4 @@ export default {
   color: #ff6347;
   margin: 0.2rem 0;
 }
-
 </style>
