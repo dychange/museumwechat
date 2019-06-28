@@ -1,22 +1,23 @@
 import axios from './index'
 
-const getItemDetail=(data)=>{
+const getCode=(data)=>{
     return axios.request({
-        url:'/weChatExhibits/select',
+        url:'/weChat/get/code',
         method:'post',
         data
     })
 }
 
-const getCommentList=(data)=>{
+const wxJsSdk=(data)=>{
     return axios.request({
-        url:'/weChat/list',
+        url:'/wechat/jsSdk',
         method:'post',
         data
     })
 }
+
 
 export {
-    getItemDetail,
-    getCommentList
+    getCode,
+    wxJsSdk
 }

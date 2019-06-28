@@ -3,11 +3,15 @@
     <div class="content">
       <div class="comment-title">
         <div>留言</div>
-        <router-link to class="write-msg">写留言</router-link>
+        <div class="write-msg" @click="showWrite=!showWrite">写留言</div>
+      </div>
+      <div class="write" v-if="showWrite">
+        <textarea class="write-comment" placeholder="你想说些什么呢?" maxlength="2000" v-model="commentWords"></textarea>
+        <button @click="reportComment">发表</button>
       </div>
       <div class="comment-info" v-for="item in commentList" :key="item.id">
         <div class="comment-img">
-          <img :src="item.headImg">
+          <img v-lazy="item.headImg">
         </div>
         <div class="comment-msg">
           <div class="author">{{item.nickName}}</div>
@@ -25,7 +29,15 @@
 export default {
   name: "Comment",
   data() {
-    return {};
+    return {
+      showWrite:false,
+      commentWords:''
+    };
+  },
+  methods: {
+    reportComment(){
+      console.log(this.commentWords)
+    }
   },
   created() {},
   props: {
@@ -74,5 +86,16 @@ export default {
 }
 .write-msg {
   color: #4169e1;
+}
+.write{
+  width: 95%;
+  height: 3rem;
+}
+.write-comment{
+  width: 100%;
+  height: 2.6rem;
+  border-radius: .1rem;
+  resize:none;
+  padding: .2rem;
 }
 </style>

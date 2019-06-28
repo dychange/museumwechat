@@ -6,7 +6,7 @@
     <div class="weui-msg__text-area">
       <h2 class="weui-msg__title">错误!</h2>
       <p class="weui-msg__desc">
-        您不在指定区域,无法查看此展品,请到指定区域查看
+        定位失败,无法查看此展品,请打开定位重新扫描二维码
       </p>
     </div>
   </div>
@@ -17,3 +17,20 @@ export default {
   name: "Error"
 };
 </script>
+
+<style scoped>
+.weui-msg__icon-area{
+  margin-bottom: .5rem;
+}
+.weui-msg__text-area{
+  padding: 0 .2rem;
+}
+.weui-msg__title{
+  font-size: .4rem;
+  margin-bottom: .2rem;
+}
+.weui-msg__desc{
+  font-size: .28rem;
+}
+
+</style>

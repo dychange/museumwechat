@@ -1,14 +1,14 @@
 <template>
   <div>
-    <user></user>
-    <div class="container">
+    <user @showContain='showContain'></user>
+    <div class="container" >
       <div class="title">失物招领</div>
       <div v-if="haslost">
         <div class="lost-container" v-for="item in lostList" :key="item.id">
           <div class="lostname">名称：{{item.articleName}}</div>
           <div class="content">说明：{{item.remark}}</div>
           <div class="place">丢失地点：{{item.lostPlace}}</div>
-          <div class="time">丢失时间：{{item.lostTime}}</div>
+          <div class="time">丢失日期：{{item.lostTime}}</div>
         </div>
       </div>
       <div class="nolost" v-else>{{tips}}</div>
@@ -27,29 +27,11 @@ export default {
       lostList: [],
       haslost: false,
       tips: "",
-      userInfo: {
-        img: "",
-        nickName: ""
-      }
     };
   },
-  methods: {
-    decodeUnicode(str) {
-      str = str.replace(/\\/g, "%");
-      return unescape(str);
-    }
-  },
-  created() {
-    let userInfo = this.$route.params.pathMatch;
-    let list = userInfo.split("&");
-    let info = [];
-    for (let i = 0; i < list.length; i++) {
-      info.push(list[i].substring(list[i].lastIndexOf("=") + 1));
-    }
-    this.userInfo.img = info[0];
-    this.userInfo.nickName =this.decodeUnicode(info[1]) ;
-    localStorage.setItem("userInfo", JSON.stringify(this.userInfo));
-    getLostInfo().then(result => {
+  methods:{
+    showContain(){
+       getLostInfo().then(result => {
       if (result.data.status === 200) {
         this.lostList = handleLost(result);
         this.haslost = true;
@@ -57,6 +39,7 @@ export default {
         this.tips = result.data.msg;
       }
     });
+    }
   },
   components: {
     User
@@ -66,34 +49,34 @@ export default {
 
 <style scoped>
 .container {
-  padding: 0 0.4rem;
+  padding: 0 0.3rem;
 }
 .title {
   text-align: center;
   margin-top: 0.4rem;
-  font-size: 0.36rem;
-  font-weight: bold;
+  font-size: 0.4rem;
+  font-weight: 550;
 }
 .lost-container {
-  width: 95%;
+  box-sizing: border-box;
   margin-top: 0.3rem;
   display: flex;
   flex-direction: column;
   border: 0.02rem solid #ccc;
   padding: 0.2rem;
   border-radius: 0.1rem;
-  box-shadow: 0 0.06rem 0.06rem -0.02rem #000, 0.06rem 0 0.06rem -0.02rem #000;
   background-color: #fff;
+  font-size: .28rem;
+  line-height: .4rem;
 }
 .content {
-  padding: 0.3rem 0;
-  font-size: 0.3rem;
+  padding: 0.1rem 0;
   overflow: hidden;
   word-break: break-all;
 }
 
 .place {
-  padding: 0.1rem 0 0.3rem 0;
+  padding-bottom: .1rem;
   overflow: hidden;
   word-break: break-all;
 }

@@ -1,4 +1,4 @@
-import router from '../router/router'
+import weui from 'weui.js'
 const axios = require('axios')
 const {baseURL} = require('./index')
 
@@ -21,7 +21,6 @@ class HttpRequest {
     interceptors(instance, url) {
         //  请求拦截
         instance.interceptors.request.use(config => {
-            //  如果队列中没有请求则开始加载动画
             console.log('请求拦截：',config)
           
             return config
@@ -33,10 +32,9 @@ class HttpRequest {
         instance.interceptors.response.use(res => {
             return res
         }, err => {
-        //    if(err.response.status === 404){
-        //         router.replace('/404')
-        //     }else{
-        //     }
+            if(err.response.status === 500){
+                weui.topTips('服务器繁忙.')
+            }
            return Promise.reject(err)
         })
     }

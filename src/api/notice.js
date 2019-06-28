@@ -22,8 +22,17 @@ const getNoticeDetail=(data)=>{
     })
 }
 
+const getUserInfo=(data)=>{
+    return axios.request({
+        url:'/wechat/userInfo',
+        method:'post',
+        data
+    })
+}
+
 export {
     getNotices,
     getLostInfo,
-    getNoticeDetail
+    getNoticeDetail,
+    getUserInfo
 }

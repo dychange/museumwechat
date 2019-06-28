@@ -1,6 +1,6 @@
 <template>
   <div>
-    <user></user>
+    <user @showContain='showContain'></user>
     <div class="container">
       <div class="detail">
         <div class="title">{{detailList.title}}</div>
@@ -27,20 +27,22 @@ export default {
       }
     };
   },
-  created() {
-    let id = this.$route.params.id;
-    getNoticeDetail({ id }).then(result => {
-      if (result.data.status === 200) {
-        result.data.info.addTime = formatDate(result.data.info.addTime);
-        let list = result.data.info;
-        this.detailList = {
-          id: list.id,
-          title: list.title,
-          content: list.content,
-          addTime: list.addTime
-        };
-      }
-    });
+  methods: {
+    showContain() {
+      let id = this.$route.params.id;
+      getNoticeDetail({ id }).then(result => {
+        if (result.data.status === 200) {
+          result.data.info.addTime = formatDate(result.data.info.addTime);
+          let list = result.data.info;
+          this.detailList = {
+            id: list.id,
+            title: list.title,
+            content: list.content,
+            addTime: list.addTime
+          };
+        }
+      });
+    }
   },
   components: {
     User
@@ -62,7 +64,7 @@ export default {
 .title {
   padding: 0.2rem;
   text-align: center;
-  font-size: 0.36rem;
+  font-size: 0.4rem;
   overflow: hidden;
   word-break: break-all;
 }
@@ -72,9 +74,9 @@ export default {
   margin: 0.2rem 0 0.4rem 0;
 }
 .content {
-  padding: .2rem;
+  padding: 0.2rem;
   line-height: 0.44rem;
-  font-size: 0.32rem;
+  font-size: 0.3rem;
   overflow: hidden;
   word-break: break-all;
   text-align: left;

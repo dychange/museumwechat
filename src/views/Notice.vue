@@ -1,20 +1,21 @@
 <template>
   <div>
-    <user></user>
+    <user @showContain="showContain"></user>
     <div class="container">
       <div class="notice">公告</div>
       <div v-if="hasnotice">
         <routerLink
           tag="div"
-          :to="/noticedetail/+item.id"
+          :to="'/museumwx/noticedetail-'+item.id"
           class="notice-container"
           v-for="item in noticeList"
           :key="item.id"
         >
           <div class="header">
-            <div class="danger" v-if="item.type===2?true:false">紧急通告</div>
-            <div class="common" v-else>普通通告</div>
+            <div class="danger" v-if="item.type===2?true:false">【紧急公告】</div>
+            <div class="common" v-else>【普通公告】</div>
             <div class="title">{{item.title}}</div>
+            <div class="content">{{item.content}}</div>
           </div>
           <div class="time">{{item.addTime}}</div>
         </routerLink>
@@ -34,39 +35,21 @@ export default {
   data() {
     return {
       noticeList: [],
-      hasnotice: false,
-      tips: "",
-      userInfo: {
-        img: "",
-        nickName: ""
-      }
+      hasnotice: true,
+      tips: ""
     };
   },
   methods: {
-    decodeUnicode(str) {
-      str = str.replace(/\\/g, "%");
-      return unescape(str);
+    showContain() {
+      getNotices().then(result => {
+        if (result.data.status === 200) {
+          this.noticeList = handleNotice(result);
+          this.hasnotice = true;
+        } else if (result.data.status === 0) {
+          this.tips = result.data.msg;
+        }
+      });
     }
-  },
-  created() {
-    let userInfo = this.$route.params.pathMatch;
-    let list = userInfo.split("&");
-    let info = [];
-    for (let i = 0; i < list.length; i++) {
-      info.push(list[i].substring(list[i].lastIndexOf("=") + 1));
-    }
-    this.userInfo.img = info[0];
-    this.userInfo.nickName = this.decodeUnicode(info[1]);
-
-    localStorage.setItem("userInfo", JSON.stringify(this.userInfo));
-    getNotices().then(result => {
-      if (result.data.status === 200) {
-        this.noticeList = handleNotice(result);
-        this.hasnotice = true;
-      } else if (result.data.status === 0) {
-        this.tips = result.data.msg;
-      }
-    });
   },
   components: {
     User
@@ -85,43 +68,52 @@ export default {
   border: 0.02rem solid #f8f8ff;
   border-radius: 0.1rem;
   background-color: #f8f8ff;
+  line-height: .6rem;
 }
 .notice-container:active,
 .notice-container:focus {
-  background-color: #d3d3d3;
+  background-color: #e4e7ed;
 }
 .notice {
   text-align: center;
   margin: 0.3rem 0;
-  font-size: 0.36rem;
-  font-weight: bold;
+  font-size: 0.4rem;
+  font-weight: 550;
 }
 .header {
   overflow: hidden;
   word-break: break-all;
 }
 .title {
-  font-size: 0.28rem;
-  margin: 0.28rem 0;
-  padding: 0 0.2rem;
+  font-size: 0.3rem;
+  margin: 0 auto;
   text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 6rem;
 }
-
+.content {
+  padding: 0 0.2rem;
+  font-size: 0.26rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #909399;
+}
 .time {
   margin-left: auto;
   font-size: 0.24rem;
   color: #ccc;
-  padding: 0.2rem;
+  padding-right: 0.2rem;
 }
 .danger {
   color: #d81e06;
 }
 .common,
 .danger {
-  font-size: 0.28rem;
-  margin: 0.2rem;
-  padding-bottom: 0.1rem;
-  text-align: center;
+  font-size: 0.3rem;
+  margin:0.1rem 0.2rem ;
   border-bottom: 0.02rem solid #ccc;
 }
 .nonotice {

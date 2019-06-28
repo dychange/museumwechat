@@ -6,15 +6,11 @@
 
 <script>
 import { getUserInfoMessage } from "./utils/localStorage";
-import { location } from "./lib/location";
 export default {
   mounted() {
     let screenWidth = document.documentElement.clientWidth;
     let html = document.querySelector("html");
     html.style.fontSize = (screenWidth / 750) * 100 + "px";
-    let geolocation = location.initMap("map-container"); //定位
-    AMap.event.addListener(geolocation, "complete", result => {});
-    AMap.event.addListener(geolocation, "error", onError => {});
   }
 };
 </script>
@@ -26,5 +22,9 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   height: 100%;
   width: 100%;
+}
+.weui-toptips {
+  padding: 0.1rem !important;
+  font-size: 0.28rem !important;
 }
 </style>
