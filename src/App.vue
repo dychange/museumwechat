@@ -1,11 +1,10 @@
 <template>
   <div id="app">
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
 <script>
-import { getUserInfoMessage } from "./utils/localStorage";
 export default {
   mounted() {
     let screenWidth = document.documentElement.clientWidth;

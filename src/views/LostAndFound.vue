@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div >
     <user @showContain='showContain'></user>
     <div class="container" >
       <div class="title">失物招领</div>

@@ -25,6 +25,7 @@ import Bscroll from "better-scroll";
 import { getItemDetail, getCommentList } from "../api/detail";
 import wx from "weixin-js-sdk";
 import { wxJsSdk } from "../api/code";
+import {clearLocalStorage} from '../utils/localStorage'
 export default {
   name: "home",
   data() {
@@ -53,6 +54,9 @@ export default {
       }
     };
   },
+  created() {
+    this.itemDetail();
+  },
   mounted() {
     this.wxconfig();
     // this.$nextTick(() => {
@@ -69,21 +73,10 @@ export default {
           timestamp: result.data.timestamp, // 必填，生成签名的时间戳
           nonceStr: result.data.nonceStr, // 必填，生成签名的随机串
           signature: result.data.signature, // 必填，签名
-          jsApiList: ["checkJsApi", "getLocation", "updateAppMessageShareData"] // 必填，需要使用的JS接口列表
+          jsApiList: ["getLocation", "updateAppMessageShareData"] // 必填，需要使用的JS接口列表
         });
-        wx.checkJsApi({
-          jsApiList: ["getLocation"],
-          success: function(res) {
-            if (res.checkResult.getLocation == false) {
-              alert(
-                "你的微信版本太低，不支持微信JS接口，请升级到最新的微信版本！"
-              );
-              return;
-            }
-          }
-        });
-        wx.ready(res => {
-          let that = this;
+        wx.ready(() => {
+          let that=this
           wx.getLocation({
             type: "wgs84", // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
             success: function(res) {
@@ -92,22 +85,24 @@ export default {
               that.$axios
                 .get(
                   "https://restapi.amap.com/v3/geocode/regeo?output=json&location=" +
-                    that.position.lng +
+                    res.longitude +
                     "," +
-                    that.position.lat +
+                    res.latitude +
                     "&key=31b77952c046fd2d7f2d5a979de9e1dc"
                 )
                 .then(result => {
-                  that.position.address = result.regeocode.formatted_address;
+                  that.position.address =
+                    result.data.regeocode.formatted_address;
                 });
-              that.itemDetail();
               that.position.flag = true;
               that.result = false;
-              console.log(res);
             },
             cancel: function(res) {
               alert("您拒绝授权获取地理位置,无法查看此展品");
               that.result = false;
+            },
+            fail: function(res){
+              alert('获取失败')
             }
           });
           wx.updateAppMessageShareData({
@@ -115,8 +110,8 @@ export default {
             desc: that.detailInfo.Content, // 分享描述
             link: window.location.href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
             imgUrl: that.detailInfo.Img, // 分享图标
-            success: function() {
-              that.$weui.toast('分享成功', 1500);
+            trigger:function(){
+              clearLocalStorage()
             }
           });
         });
@@ -128,9 +123,8 @@ export default {
         if (result.data.status === 200) {
           this.detailInfo = {
             Name: result.data.info.name,
-            Img: "http://ptljizme7.bkt.clouddn.com/" + result.data.info.imgName,
-            Audio:
-              "http://ptljizme7.bkt.clouddn.com/" + result.data.info.audioName,
+            Img: result.data.info.imgName,
+            Audio: result.data.info.audioName,
             Content: result.data.info.info
           };
         }

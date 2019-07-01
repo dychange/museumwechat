@@ -24,7 +24,7 @@ export default {
         title: "",
         content: "",
         addTime: null
-      }
+      },
     };
   },
   methods: {
@@ -39,7 +39,7 @@ export default {
             title: list.title,
             content: list.content,
             addTime: list.addTime
-          };
+          }
         }
       });
     }

@@ -15,7 +15,7 @@
 
 <script>
 import { getUserInfo } from "../api/notice";
-import { getUserInfoMessage } from "../utils/localStorage";
+import  {getUserInfoMessage} from '../utils/localStorage'
 export default {
   name: "User",
   data() {
@@ -27,8 +27,8 @@ export default {
     };
   },
   created() {
-    let token = getUserInfoMessage("userInfo").token;
-    let openid = getUserInfoMessage("userInfo").openid;
+    let token =getUserInfoMessage('userInfo').token ;
+    let openid =getUserInfoMessage('userInfo').openid;
     getUserInfo({
       ACCESS_TOKEN: token,
       OPENID: openid

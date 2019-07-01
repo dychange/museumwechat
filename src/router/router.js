@@ -16,12 +16,17 @@ Vue.use(Router)
 })
 
 router.beforeEach((to, from, next) => {
+  
       if(!getUserInfoMessage('userInfo') && to.path!=='/museumwx/author'){
-       let path= to.fullPath.substring(to.fullPath.lastIndexOf('/')+1)
-        window.location.href=window.location.origin+'/museumwx/weChat/auth?returnUrl='+path
+        if(to.path.indexOf('code-') == -1){
+          let path= to.fullPath.substring(to.fullPath.lastIndexOf('/')+1)
+          window.location.href=window.location.origin+'/museumwx/weChat/auth?returnUrl='+path
+        }else{
+          next()
+        }
         // window.location.href.substring(0,window.location.href.lastIndexOf('/'))
       }else{
-        next();
+        next(); 
       }
 })
 

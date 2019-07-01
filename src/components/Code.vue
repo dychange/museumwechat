@@ -1,30 +1,21 @@
 <template>
-  <div class="container" v-lazy:background-image="backImg" :key="backImg">
+  <div class="container" >
     <div class="header">
       <img v-lazy="titleImg">
       <div class="title">上海天文博物馆</div>
     </div>
-    <img class="code" v-lazy="codeImg" :key="codeImg">
-    <div class="info">
-      请长按二维码识别
-      <br>关注公众号查看展品详细介绍
-    </div>
-    <div class="address">
-      博物馆地址:上海市松江区西佘山顶
-      <br>开放时间:周一到周六(8:00-18:00)
-    </div>
+    <img class="code" :src="codeImg" >
   </div>
 </template>
 
 <script>
 import { getCode } from "../api/code";
-
 export default {
   name: "Code",
   data() {
     return {
       codeImg: "",
-      backImg: require("../assets/imgs/code.jpg"),
+      backImg: require("../assets/imgs/code.png"),
       titleImg: require("../assets/imgs/title.png")
     };
   },
@@ -43,9 +34,8 @@ export default {
 .container {
   height: 100%;
   width: 100%;
-  background-repeat: no-repeat;
+  background: url('../assets/imgs/code.png') no-repeat center center;
   background-size: 100% 100%;
-  background-position: center center;
   position: relative;
 }
 .code {
@@ -73,17 +63,5 @@ export default {
   font-size: 0.4rem;
   letter-spacing: 0.04rem;
   font-weight: bold;
-}
-.info {
-  width: 4rem;
-  text-align: center;
-  margin: 6rem auto 0;
-  font-size: 0.28rem;
-}
-.address {
-  margin: 2rem auto 0;
-  width: 4rem;
-  text-align: center;
-  font-size: 0.26rem;
 }
 </style>

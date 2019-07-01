@@ -75,7 +75,7 @@ export default {
   font-weight: 550;
 }
 .detail-info {
-  padding: 0.2rem;
+  padding: 0.2rem .2rem .4rem ;
   margin: 0.4rem 0;
   line-height: 0.5rem;
   font-size: 0.28rem;

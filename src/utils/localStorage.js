@@ -3,7 +3,7 @@ import WebStorageCache from 'web-storage-cache'
 const localStorage = new WebStorageCache()
 
 const setLocalStorage = function (key, value) {
-  return localStorage.set(key, value, {exp: 1800})
+  return localStorage.set(key, value, {exp: 10})
 }
 const getLocalStorage = function (key) {
   return localStorage.get(key)

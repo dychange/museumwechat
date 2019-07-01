@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div >
     <user @showContain="showContain"></user>
     <div class="container">
       <div class="notice">公告</div>
@@ -36,7 +36,7 @@ export default {
     return {
       noticeList: [],
       hasnotice: true,
-      tips: ""
+      tips: "",
     };
   },
   methods: {

@@ -14,14 +14,25 @@ export default {
         token: this.$route.query.token,
         openid: this.$route.query.openid
       };
+      // sessionStorage.setItem("userInfo", JSON.stringify(msg));
       saveUserInfo("userInfo", msg);
       window.location.href = window.location.origin + url;
     } else if (status == 0) {
-      if (url.indexOf("/detail-") > -1) {
-        let id = this.$route.query.url.split("-")[1];
-        this.$router.replace("/museumwx/code-" + id);
-      }else{
-        this.$router.replace('/museumwx/code-0')
+      if (url.indexOf("?") > -1) {
+        url = url.split("?")[0];
+        if (url.indexOf("detail-") > -1) {
+          let id = this.$route.query.url.split("-")[1];
+          window.location.href = window.location.origin + "/museumwx/code-" + id;
+        } else {
+          window.location.href = window.location.origin + "/museumwx/code-0";
+        }
+      } else {
+        if (url.indexOf("detail-") > -1) {
+          let id = this.$route.query.url.split("-")[1];
+          window.location.href = window.location.origin + "/museumwx/code-" + id;
+        } else {
+          window.location.href = window.location.origin + "/museumwx/code-0";          
+        }
       }
     }
   }
