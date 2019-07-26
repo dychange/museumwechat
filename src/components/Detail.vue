@@ -1,35 +1,36 @@
 <template>
   <div class="detail">
-    <div class="detail-container">
-      <div class="detail-title">
-        <div>{{detailInfo.Name}}</div>
+    <div v-if="!nodetail.flag">
+      <div class="detail-container">
+        <div class="detail-title">
+          <div>{{detailInfo.Name}}</div>
+        </div>
+        <div class="detail-img">
+          <img v-lazy="detailInfo.Img" />
+        </div>
+        <div class="detail-audio">
+          <div class="audio">语音导览</div>
+          <audio :src="detailInfo.Audio" controls preload="auto"></audio>
+        </div>
+        <div class="detail-info">
+          <div>{{detailInfo.Content}}</div>
+        </div>
       </div>
-      <div class="detail-img">
-        <img v-lazy="detailInfo.Img">
+      <div class="location">
+        <div style="font-weight:bold">您当前的位置:</div>
+        <div class="address">{{position.address}}</div>
+        <div class="lnglat">当前经纬度:({{position.lng}},{{position.lat}})</div>
+        <div style="font-weight:bold">指定位置:</div>
+        <div class="appoint">上海天文博物馆</div>
+        <div class="lnglat">指定经纬度:(121.19311,31.09435)</div>
       </div>
-      <div class="detail-audio">
-        <div class="audio">音频介绍</div>
-        <audio :src="detailInfo.Audio" controls preload="auto"></audio>
-      </div>
-      <div class="detail-info">
-        <h1 class="text">文字介绍</h1>
-        <div>{{detailInfo.Content}}</div>
-      </div>
+      <div id="map-container"></div>
     </div>
-    <div class="location">
-      <div style="font-weight:bold">您当前的位置:</div>
-      <div class="address">{{position.address}}</div>
-      <div class="lnglat">当前经纬度:({{position.lng}},{{position.lat}})</div>
-      <div style="font-weight:bold">指定位置:</div>
-      <div class="appoint">上海天文博物馆</div>
-      <div class="lnglat">指定经纬度:(121.19311,31.09435)</div>
-    </div>
-    <div id="map-container"></div>
+    <div class="noitem" v-else>{{nodetail.tips}}</div>
   </div>
 </template>
 
 <script>
-
 export default {
   name: "Detail",
   props: {
@@ -37,6 +38,9 @@ export default {
       type: Object
     },
     detailInfo: {
+      type: Object
+    },
+    nodetail: {
       type: Object
     }
   }
@@ -75,13 +79,14 @@ export default {
   font-weight: 550;
 }
 .detail-info {
-  padding: 0.2rem .2rem .4rem ;
+  padding: 0.2rem 0.2rem 0.4rem;
   margin: 0.4rem 0;
   line-height: 0.5rem;
   font-size: 0.28rem;
-  border-bottom: .02rem solid #C0C4CC;
+  border-bottom: 0.02rem solid #c0c4cc;
+  text-align: justify;
 }
-.text,
+
 .audio {
   text-align: center;
   margin-bottom: 0.36rem;
@@ -98,5 +103,16 @@ export default {
   font-size: 0.26rem;
   margin: 0.1rem 0;
   color: #ff6347;
+}
+.noitem {
+  width: 4rem;
+  height: 4rem;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -2rem;
+  margin-top: -2rem;
+  text-align: center;
+  font-size: 0.5rem;
 }
 </style>

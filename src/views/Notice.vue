@@ -35,7 +35,7 @@ export default {
   data() {
     return {
       noticeList: [],
-      hasnotice: true,
+      hasnotice: false,
       tips: "",
     };
   },
@@ -47,6 +47,7 @@ export default {
           this.hasnotice = true;
         } else if (result.data.status === 0) {
           this.tips = result.data.msg;
+          this.hasnotice=false
         }
       });
     }

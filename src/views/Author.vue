@@ -14,9 +14,8 @@ export default {
         token: this.$route.query.token,
         openid: this.$route.query.openid
       };
-      // sessionStorage.setItem("userInfo", JSON.stringify(msg));
       saveUserInfo("userInfo", msg);
-      window.location.href = window.location.origin + url;
+      window.location.href = window.location.origin + url + '?t='+new Date().getTime();
     } else if (status == 0) {
       if (url.indexOf("?") > -1) {
         url = url.split("?")[0];

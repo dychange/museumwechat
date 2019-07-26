@@ -15,8 +15,7 @@ export default {
   data() {
     return {
       codeImg: "",
-      backImg: require("../assets/imgs/code.png"),
-      titleImg: require("../assets/imgs/title.png")
+      titleImg: 'http://museum.sharemoretech.com/important/wxtitle.jpg'
     };
   },
     created() {
@@ -34,7 +33,7 @@ export default {
 .container {
   height: 100%;
   width: 100%;
-  background: url('../assets/imgs/code.png') no-repeat center center;
+  background: url('http://museum.sharemoretech.com/important/code.jpg') no-repeat center center;
   background-size: 100% 100%;
   position: relative;
 }

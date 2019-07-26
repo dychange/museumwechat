@@ -37,6 +37,7 @@ export default {
         this.haslost = true;
       } else if (result.data.status === 0) {
         this.tips = result.data.msg;
+        this.haslost=false
       }
     });
     }

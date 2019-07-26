@@ -1,7 +1,7 @@
 <template>
   <div class="home" ref="home">
     <div class="content" v-show="position.flag">
-      <detail :position="position" :detailInfo="detailInfo"></detail>
+      <detail :position="position" :detailInfo="detailInfo" :nodetail="nodetail"></detail>
       <!-- <detail-comment :commentList="commentList"></detail-comment> -->
       <!-- <div class="weui-loadmore" v-if="loading">
         <i class="weui-loading"></i>
@@ -25,7 +25,7 @@ import Bscroll from "better-scroll";
 import { getItemDetail, getCommentList } from "../api/detail";
 import wx from "weixin-js-sdk";
 import { wxJsSdk } from "../api/code";
-import {clearLocalStorage} from '../utils/localStorage'
+import { clearLocalStorage, getUserInfoMessage } from "../utils/localStorage";
 export default {
   name: "home",
   data() {
@@ -37,7 +37,7 @@ export default {
       options: {
         probeType: 3,
         pullUpLoad: {
-          threshold: 100 // 开始加载的时机
+          threshold: 10 // 开始加载的时机
         }
       },
       position: {
@@ -51,6 +51,10 @@ export default {
         Img: "",
         Audio: "",
         Content: ""
+      },
+      nodetail: {
+        flag: false,
+        tips: ""
       }
     };
   },
@@ -76,7 +80,7 @@ export default {
           jsApiList: ["getLocation", "updateAppMessageShareData"] // 必填，需要使用的JS接口列表
         });
         wx.ready(() => {
-          let that=this
+          let that = this;
           wx.getLocation({
             type: "wgs84", // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
             success: function(res) {
@@ -92,8 +96,9 @@ export default {
                 )
                 .then(result => {
                   that.position.address =
-                    result.data.regeocode.formatted_address;
+                    result.data.regeocode.formatted_address;                  
                 });
+
               that.position.flag = true;
               that.result = false;
             },
@@ -101,8 +106,9 @@ export default {
               alert("您拒绝授权获取地理位置,无法查看此展品");
               that.result = false;
             },
-            fail: function(res){
-              alert('获取失败')
+            fail: function(res) {
+              alert("获取失败");
+              that.result = false;
             }
           });
           wx.updateAppMessageShareData({
@@ -110,8 +116,8 @@ export default {
             desc: that.detailInfo.Content, // 分享描述
             link: window.location.href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
             imgUrl: that.detailInfo.Img, // 分享图标
-            trigger:function(){
-              clearLocalStorage()
+            trigger: function() {
+              clearLocalStorage();
             }
           });
         });
@@ -119,7 +125,8 @@ export default {
     },
     itemDetail() {
       let id = this.$route.params.id;
-      getItemDetail({ id }).then(result => {
+      let openid = getUserInfoMessage("userInfo").openid;
+      getItemDetail({ id, openid }).then(result => {
         if (result.data.status === 200) {
           this.detailInfo = {
             Name: result.data.info.name,
@@ -127,9 +134,14 @@ export default {
             Audio: result.data.info.audioName,
             Content: result.data.info.info
           };
+        } else if (result.data.status === 400) {
+          this.nodetail = {
+            flag: true,
+            tips: result.data.msg
+          };
         }
       });
-    }
+    },
     // itemDetailComment() {
     // let id = this.$route.params.id;
     // getCommentList({
